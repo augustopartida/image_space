@@ -18,11 +18,11 @@ services:
     image: mongo:3.0
     command: "--smallfiles"
     networks:
-      - imagespace-network
+      - deploy_imagespace-network
   imagespace-solr:
     image: solr:6.0
     networks:
-      - imagespace-network
+      - deploy_imagespace-network
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
@@ -30,7 +30,7 @@ services:
   imagespace-girder:
     image: nasajplmemex/image_space
     networks:
-      - imagespace-network
+      - deploy_imagespace-network
     ports:
       - "8989:8989"
     depends_on:
@@ -42,7 +42,7 @@ services:
   imagespace-imagecat:
     image: nasajplmemex/imagecat
     networks:
-      - imagespace-network
+      - deploy_imagespace-network
     entrypoint:
       - /deploy/entrypoint_imagecatdev.sh
     ports:
@@ -55,5 +55,5 @@ services:
       - ${IMAGE_DIR}:/images
 
 networks:
-  imagespace-network:
-    driver: bridge
+  deploy_imagespace-network:
+    external: true
